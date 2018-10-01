@@ -56,7 +56,7 @@ class CmeModelCme extends JModelLegacy
         $listings = $db->loadObjectList();
         echo "<div>";
         foreach ($listings as $key => $value) {
-            echo "<div><span>{$value->title}</span><span>{$value->provider}</span><span>{$value->published}</span><span>{$value->specialties}</span><span>{$value->categories}</span></div>";
+            echo "<div><span>{$value->published} | </span><span>{$value->provider}</span></div>";
         }
         echo "</div>";
         return $listings;
