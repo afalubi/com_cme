@@ -34,6 +34,31 @@ class CmeModelCme extends JModelLegacy
         return $listings;
     }
 
+    static function getDb() {
+        $option = array(); //prevent problems
+
+        $option['driver']   = 'mysql';            // Database driver name
+        $option['host']     = 'localhost';    // Database host name
+        $option['user']     = 'apollo_cme';       // User for database authentication
+        $option['password'] = '(A9FTJi5J_AK';   // Password for database authentication
+        $option['database'] = 'apollo_cme';      // Database name
+        $option['prefix']   = 'cme_';             // Database prefix (may be empty)
+
+        return $db = JDatabaseDriver::getInstance( $option );
+    }
+
+    function getListingCategories($specialty, $category) {
+        $db =& CmeModelCme::getDb();
+        $city_id = $db->quote($city_id);
+        $query = "SELECT * FROM `#__courses` cme";
+        //WHERE c.id = {$city_id}";
+
+        $db->setQuery( $query );
+        $listings = $db->loadObjectList();
+        echo "<pre>" . print_r($listings, true) . "</pre>";
+        return $listings;
+    }
+
 	function getJobCmeInfo($cme_id, $city_id) {
 		$db =& JFactory::getDBO();
 
