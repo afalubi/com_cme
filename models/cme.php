@@ -50,7 +50,7 @@ class CmeModelCme extends JModelLegacy
     function getListingCategories($provider = NULL) {
         $db =& CmeModelCme::getDb();
         $where = ($provider === NULL ? "" : $where = " AND UPPER(provider) = " . $db->quote(strtoupper($provider)));
-        $query = "SELECT * FROM `#__courses` cme WHERE published = 'Y'" . $where;
+        $query = "SELECT published, title, provider, categories, specialties FROM `#__courses` cme WHERE published = 'Y'" . $where;
 
         $db->setQuery( $query );
         $listings = $db->loadObjectList();

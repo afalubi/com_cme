@@ -22,8 +22,8 @@ if (isset($this->results) and (!empty($this->results))) {
 		</div>";
 }
 
-foreach ($this->results as $result) {
-//	echo "<div style='margin-top:10px;'><a href='{$provider->url}'>{$provider->hospital_name}</a><br/>{$provider->address1}<br/>{$provider->city}, {$provider->state} {$provider->zip_code}<br/>{$provider->phone_number}</div>";
+foreach ($this->results as $key=>$listing) {
+	echo "<div style='margin-top:10px;'>{$listing->title}</div>";
 	// echo "<pre>" . print_r($result, true) . "</pre>";
 	// $encoded_spec = urlencode($result->specialty);
 
