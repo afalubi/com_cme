@@ -40,7 +40,7 @@ class CmeViewListings extends JViewLegacy
 		$model =& $this->getModel();
 		$mydoc =& JFactory::getDocument();
 
-		$results = $model->getListings($specialty, $category);
+		$results = $model->getListingCategories($specialty, $category);
 
 /*
 		$mydoc->setMetaData('keywords',"physician jobs, {$results[0]->city} physician jobs, physician job search, {$results[0]->city} physician job search");
