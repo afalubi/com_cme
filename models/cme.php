@@ -22,18 +22,6 @@ jimport( 'joomla.application.component.model' );
 class CmeModelCme extends JModelLegacy
 {
 
-    function getListings($specialty, $category) {
-        $db =& JFactory::getDBO();
-        $city_id = $db->quote($city_id);
-        $query = "SELECT * FROM `#__cme` cme";
-        //WHERE c.id = {$city_id}";
-
-        $db->setQuery( $query );
-        $listings = $db->loadObjectList();
-        echo "<pre>" . print_r($listings, true) . "</pre>";
-        return $listings;
-    }
-
     static function getDb() {
         $option = array(); //prevent problems
 
@@ -47,11 +35,22 @@ class CmeModelCme extends JModelLegacy
         return $db = JDatabaseDriver::getInstance( $option );
     }
 
-    function getListingCategories($specialty, $category) {
-        $db =& CmeModelCme::getDb();
+    function getListings($specialty, $category) {
+        $db =& JFactory::getDBO();
         $city_id = $db->quote($city_id);
-        $query = "SELECT * FROM `#__courses` cme";
+        $query = "SELECT * FROM `#__cme` cme";
         //WHERE c.id = {$city_id}";
+
+        $db->setQuery( $query );
+        $listings = $db->loadObjectList();
+        echo "<pre>" . print_r($listings, true) . "</pre>";
+        return $listings;
+    }
+
+    function getListingCategories($provider = NULL) {
+        $db =& CmeModelCme::getDb();
+        $where = ($provider === NULL ? "" : $where = " WHERE UCASE(provider) = '" . $db->quote($provider) . "'");
+        $query = "SELECT * FROM `#__courses` cme" . $where;
 
         $db->setQuery( $query );
         $listings = $db->loadObjectList();
