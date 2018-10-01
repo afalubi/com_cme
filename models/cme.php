@@ -24,20 +24,14 @@ class CmeModelCme extends JModelLegacy
 
     function getListings($specialty, $category) {
         $db =& JFactory::getDBO();
+        $city_id = $db->quote($city_id);
+        $query = "SELECT * FROM `#__cme` cme";
+        //WHERE c.id = {$city_id}";
 
-        		$city_id = $db->quote($city_id);
-
-        		$query = "SELECT * FROM `#__sd_job_specs` js
-        			LEFT JOIN `#__sd_physician` p ON js.cme_id = p.id
-        			LEFT JOIN `#__sd_city` c ON js.city_id = c.id
-        			WHERE c.id = {$city_id}";
-
-        		$db->setQuery( $query );
-        		$job_spec = $db->loadObjectList();
-
-        		// echo "<pre>" . print_r($job_spec, true) . "</pre>";
-
-        return $job_spec;
+        $db->setQuery( $query );
+        $listings = $db->loadObjectList();
+        echo "<pre>" . print_r($listings, true) . "</pre>";
+        return $listings;
     }
 
 	function getJobCmeInfo($cme_id, $city_id) {
