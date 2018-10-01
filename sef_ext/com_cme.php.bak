@@ -1,0 +1,104 @@
+<?php
+/**
+ * sh404SEF support for com_docman component.
+ * Copyright Yannick Gaultier (shumisha) - 2007
+ * shumisha@gmail.com
+ * @version     $Id: com_docman.php 866 2009-01-17 14:05:21Z silianacom-svn $
+ * {shSourceVersionTag: Version x - 2007-09-20}
+ */
+
+/*
+defined( '_JEXEC' ) or die( 'Direct Access to this location is not allowed.' );
+
+// ------------------  standard plugin initialize function - don't change ---------------------------
+global $sh_LANG;
+$sefConfig = & shRouter::shGetConfig();  
+$shLangName = '';
+$shLangIso = '';
+$title = array();
+$shItemidString = '';
+$dosef = shInitializePlugin( $lang, $shLangName, $shLangIso, $option);
+if ($dosef == false) return;
+// ------------------  standard plugin initialize function - don't change ---------------------------
+
+// ------------------  load language file - adjust as needed ----------------------------------------
+$shLangIso = shLoadPluginLanguage( 'com_docman', $shLangIso, '_SH404SEF_DOCMAN_DOC_DOWNLOAD');
+// ------------------  load language file - adjust as needed ----------------------------------------
+
+$db =& JFactory::getDBO();
+if (isset($specialty_id) and !empty($specialty_id)) {
+	$spec_id = $db->quote($specialty_id);
+	$query = "SELECT specialty FROM `#__sd_physician` WHERE id={$spec_id} LIMIT 1";
+	$db->setQuery( $query );
+	$result = $db->loadObject();
+	$specialty = strtolower(str_replace('&', 'and', $result->specialty));
+}
+
+if (isset($city_id) and !empty($city_id)) {
+	$c_id = $db->quote($city_id);
+	$query = "SELECT city FROM `#__sd_city` WHERE id={$c_id} LIMIT 1";
+	$db->setQuery( $query );
+	$result = $db->loadObject();
+	$city = strtolower($result->city);
+	$city = str_replace('+','-', $city);
+	$city = str_replace(' ','-', $city);
+}
+
+// if (isset($specialty) and !empty($specialty)) {
+//	$specialty = str_replace('%26', 'and', $specialty);
+//}
+
+if (isset($view)) {
+	if (!(isset($Itemid))) {
+		$menus = &JSite::getMenu();
+		$menu  = $menus->getActive();
+		$Itemid = $menu->id;
+		
+		shAddToGETVarsList('Itemid', $Itemid);
+		shRemoveFromGETVarsList('Itemid');
+	}
+
+	switch ($view) {
+		case 'speclist':
+			if (isset($specialty) and !empty($specialty)) {
+				$title[] = "{$specialty}-jobs-board";
+			}
+			if (isset($city) and !empty($city)) {
+				$title[] = "physician-jobs-{$city}";
+			}
+			if (!isset($specialty) and !isset($city)) {
+				$title[] = 'physician-specialty-pages';
+			}
+			break;
+		case 'specpage':
+			// if (isset($specialty) and !empty($specialty) and isset($city) and !empty($city)) {
+			if (isset($specialty_id) and !empty($specialty_id) and isset($city_id) and !empty($city_id)) {
+				$title[] = "{$specialty}-jobs-{$city}";
+			}
+			break;
+		case 'init':
+			$title[] = "initialize-specialties";
+			break;
+	}
+	if (isset($specialty_id)) shRemoveFromGETVarsList('specialty_id');  
+	if (isset($city_id)) shRemoveFromGETVarsList('city_id');  
+	if (isset($option)) shRemoveFromGETVarsList('option');
+	if (isset($lang)) shRemoveFromGETVarsList('lang');  
+	if (isset($Itemid)) shRemoveFromGETVarsList('Itemid');
+	if (isset($task)) shRemoveFromGETVarsList('task');
+	if (isset($view)) shRemoveFromGETVarsList('view');
+	if (isset($fontstyle)) shRemoveFromGETVarsList('fontstyle');
+}
+
+// if (isset($specialty)) shRemoveFromGETVarsList('specialty');  
+// if (isset($city)) shRemoveFromGETVarsList('city');  
+
+// ------------------  standard plugin finalize function - don't change ---------------------------  
+if ($dosef){
+   $string = shFinalizePlugin( $string, $title, $shAppendString, $shItemidString, 
+      (isset($limit) ? @$limit : null), (isset($limitstart) ? @$limitstart : null), 
+      (isset($shLangName) ? @$shLangName : null));
+}      
+// ------------------  standard plugin finalize function - don't change ---------------------------
+*/
+?>
